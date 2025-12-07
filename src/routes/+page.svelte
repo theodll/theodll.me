@@ -14,18 +14,55 @@
   let currentInput = "";
   
   const bootSequence = [
-    "> SYSTEM BOOT SEQUENCE INITIATED...",
-    "> CHECKING MEMORY... 64KB OK",
-    "> LOADING KERNEL... OK",
-    "> MOUNTING VOLUMES... OK",
-    "> USER DETECTED: THEO.DLL",
-    "> INITIALIZING SHELL...",
-    "> ACCESS GRANTED."
-  ];
+  "> SYSTEM BOOT SEQUENCE INITIATED...",
+  "> CHECKING MEMORY... 64KB OK",
+  "> PERFORMING EXTENDED MEMORY DIAGNOSTICS... OK",
+  "> VERIFYING MEMORY SEGMENT ALIGNMENT... OK",
+  "> LOADING KERNEL... OK",
+  "> VERIFYING KERNEL SIGNATURE... VALID",
+  "> INITIALIZING INTERRUPT VECTORS... OK",
+  "> REGISTERING HARDWARE INTERRUPTS... OK",
+  "> SCANNING CONNECTED DEVICES... 7 FOUND",
+  "> PROBING PCI BUS... OK",
+  "> INITIALIZING DMA CHANNELS... OK",
+  "> LOADING VIDEO DRIVER... OK",
+  "> LOADING AUDIO SUBSYSTEM... OK",
+  "> INITIALIZING /dev/random... OK",
+  "> CONFIGURING NETWORK INTERFACE... OK",
+  "> LOOPBACK TEST... OK (127.0.0.1 responded immediately)",
+  "> DHCP REQUEST... OK",
+  "> MOUNTING VOLUMES... OK",
+  "> CHECKING FILE SYSTEM INTEGRITY... CLEAN",
+  "> REPLAYING JOURNAL... OK",
+  "> VALIDATING USERSPACE BRIDGE... OK",
+  "> LOADING SHELL PROFILES... OK",
+  "> FETCHING ENVIRONMENT VARIABLES... OK",
+  "> ALLOCATING STACKS... OK",
+  "> INITIALIZING SCHEDULER... OK",
+  "> ACTIVATING KERNEL PREEMPTION... OK",
+  "> WARMING UP FPU... OK",
+  "> TESTING SIMD REGISTERS... OK (AVX2 AVAILABLE)",
+  "> INITIALIZING POWER MANAGEMENT... OK",
+  "> LOADING OPTIONAL MODULES... OK",
+  "> DETECTING USER: THEO.DLL",
+  "> LOADING USER PROFILE... OK",
+  "> AUTHENTICATING SESSION... OK",
+  "> PREPARING USERSPACE...",
+  "> STARTING BACKGROUND SERVICES... OK",
+  "> SYNCING SYSTEM CLOCK... OK",
+  "> CLEARING TEMPORARY BUFFERS... OK",
+  "> FINALIZING INIT SEQUENCE...",
+  "> ACCESS GRANTED.",
+  "> SYSTEM READY.",
+  "> TRY NOT TO OPEN VIM IN FULLSCREEN THIS TIME."
+];
+
 
   const commands = {
     help: "AVAILABLE COMMANDS: HELP, VELT, GITHUB, CLEAR, WHOAMI",
     velt: "OPENING VELT GAME ENGINE REPOSITORY...",
+    projects: "LOADING PROJECTS \n - VELT: A CUSTOM C++ GAME ENGINE (GITHUB.COM/THEODLL/VELT) \n - FLOURINEOS: 32BIT OPERATING SYSTEM (GITHUB.COM/THEODLL/FLOURINEOS) \n - THEO.DLL: PERSONAL WEBSITE (GITHUB.COM/THEODLL/THEODLL.ME)",
+    about: "I'M THEO, A C++ DEVELOPER BUILDING MY OWN CUSTOM GAME ENGINE CALLED VELT. THATS PRETTY MUCH IT.",
     github: "OPENING GITHUB PROFILE...",
     whoami: "I'M A C++ DEVELOPER WORKING ON MY GAME ENGINE.",
     clear: "CLEARING TERMINAL..."
@@ -81,12 +118,19 @@
     
     // Try to go fullscreen
 
-    playDialUpSound();
+    // playDialUpSound();
+
+    let i = 0;
 
     for (let line of bootSequence) {
+      i++;
       history = [...history, { type: 'output', text: line }];
-      await new Promise(r => setTimeout(r, Math.random() * 300 + 100));
+      await new Promise(r => setTimeout(r, Math.random() * 100 + 100));
       scrollToBottom();
+
+      if (i === bootSequence.length - 3) {
+          history = []; 
+      }
     }
 
     await new Promise(r => setTimeout(r, 500));
@@ -95,6 +139,9 @@
       { type: 'output', text: "" },
       { type: 'output', text: "WELCOME TO THEO.DLL TERMINAL v1.0" },
       { type: 'output', text: "TYPE 'HELP' FOR COMMANDS." },
+      { type: 'output', text: "TYPE 'PROJECTS' TO SEE MY WORK." },
+      { type: 'output', text: "TYPE 'ABOUT' TO LEARN MORE ABOUT ME." },
+      { type: 'output', text: "TYPE 'GITHUB' TO VISIT MY PROFILE." },
       { type: 'output', text: "" }
     ];
     
@@ -142,7 +189,7 @@
 </script>
 
 <svelte:head>
-  <title>THEO.DLL</title>
+  <title>theo.dll</title>
 </svelte:head>
 
 <svelte:window on:click={focusInput} />
