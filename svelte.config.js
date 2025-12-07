@@ -13,7 +13,7 @@ const config = {
                 environment: undefined,
                 persist: undefined
             },
-            fallback: 'plaintext',
+            // Die Option 'fallback' wurde entfernt, um Assets korrekt zu integrieren.
             routes: {
                 include: ['/*'],
                 exclude: ['<all>']
